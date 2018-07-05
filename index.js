@@ -37,6 +37,16 @@ const game = createStore(gameReducer);
 game.subscribe(printBoard);
 game.subscribe(getInput('X'));
 game.subscribe(getInput('O'));
+game.subscribe(() => {
+  const { winner } = game.getState();
+  if (winner && winner !== 'draw') {
+    console.log('You won, player ' + winner + '!')
+    process.exit(0);
+  } else if (winner === 'draw') {
+    console.log('Tie game')
+    process.exit(0);
+  }
+})
 
 // We dispatch a dummy START action to call all our
 // subscribers the first time.
